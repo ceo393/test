@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEO 아침 브리핑 대시보드</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <header class="header">
+            <div class="header-content">
+                <h1>CEO 아침 브리핑</h1>
+                <div class="header-time">
+                    <span id="current-date"></span>
+                    <span id="current-time"></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 메인 콘텐츠 -->
+        <main class="main-content">
+            <!-- 1. KPI 섹션 -->
+            <section class="section kpi-section">
+                <h2 class="section-title">📊 오늘의 KPI</h2>
+                <div class="kpi-container" id="kpi-container">
+                    <!-- JS에서 동적 생성 -->
+                </div>
+            </section>
+
+            <!-- 2. 일정 섹션 -->
+            <section class="section schedule-section">
+                <h2 class="section-title">📅 오늘의 일정</h2>
+                <div class="schedule-container" id="schedule-container">
+                    <!-- JS에서 동적 생성 -->
+                </div>
+            </section>
+
+            <!-- 3. 팀 공지사항 섹션 -->
+            <section class="section announcements-section">
+                <h2 class="section-title">📢 팀 공지사항</h2>
+                <div class="announcements-container" id="announcements-container">
+                    <!-- JS에서 동적 생성 -->
+                </div>
+            </section>
+
+            <!-- 4. AI 업계 뉴스 섹션 -->
+            <section class="section news-section">
+                <div class="section-header">
+                    <h2 class="section-title">🤖 AI 비서의 업계 뉴스 요약</h2>
+                    <button class="refresh-btn" id="refresh-news-btn" title="새로고침">🔄</button>
+                </div>
+                <div class="news-container" id="news-container">
+                    <p class="loading">뉴스를 불러오는 중...</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- 푸터 -->
+        <footer class="footer">
+            <p>마지막 업데이트: <span id="last-update"></span></p>
+        </footer>
+    </div>
+
+    <!-- 외부 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
+    <!-- 로컬 JS 모듈 -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

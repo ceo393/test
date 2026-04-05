@@ -1,0 +1,25 @@
+{
+  "name": "ceo-dashboard",
+  "version": "1.0.0",
+  "description": "CEO 아침 브리핑 대시보드",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "dev:vercel": "vercel dev",
+    "build": "echo 'Static site - no build needed'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "dashboard",
+    "ceo",
+    "briefing"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.28.0"
+  },
+  "devDependencies": {
+    "vercel": "^37.0.0"
+  }
+}

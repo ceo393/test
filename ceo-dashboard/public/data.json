@@ -1,0 +1,59 @@
+{
+  "lastUpdated": "2026-04-05T00:00:00Z",
+  "kpis": {
+    "revenue": {
+      "value": "₩2.5M",
+      "change": "+12%",
+      "changeType": "positive"
+    },
+    "visitors": {
+      "value": "145K",
+      "change": "+8%",
+      "changeType": "positive"
+    },
+    "conversion": {
+      "value": "3.2%",
+      "change": "+0.5%",
+      "changeType": "positive"
+    }
+  },
+  "schedule": [
+    {
+      "time": "09:00",
+      "title": "경영진 회의",
+      "attendees": "CEO, CFO, CTO"
+    },
+    {
+      "time": "10:30",
+      "title": "마케팅 팀 분기별 보고",
+      "attendees": "CEO, Marketing Director"
+    },
+    {
+      "time": "14:00",
+      "title": "제품 로드맵 리뷰",
+      "attendees": "Product & Engineering Team"
+    },
+    {
+      "time": "16:00",
+      "title": "전사 타운홀 미팅",
+      "attendees": "All Staff"
+    }
+  ],
+  "announcements": [
+    {
+      "title": "Q2 분기별 목표 달성 현황",
+      "content": "Q2 분기가 시작되었습니다. 각 팀은 분기별 목표를 재확인하고 주간 진행상황을 추적해주시기 바랍니다. 월요일 오후 3시에 목표 달성 현황 체크인 회의가 예정되어 있습니다.",
+      "time": "2026-04-04T18:30:00Z"
+    },
+    {
+      "title": "신사무실 이전 일정 안내",
+      "content": "4월 15일 새로운 사무실로 이전합니다. 4월 8일부터 이사 준비가 시작되오니 개인 물품 정리를 부탁드립니다. 자세한 일정은 HR팀에 문의해주세요.",
+      "time": "2026-04-03T14:00:00Z"
+    },
+    {
+      "title": "팀 빌딩 이벤트 개최",
+      "content": "4월 20일 팀 빌딩 이벤트가 개최됩니다. 장소는 서울 강남의 스카이라운지이며, 모든 임직원의 참석을 부탁드립니다. 참석 여부는 HR팀 구글 폼을 통해 4월 10일까지 제출해주세요.",
+      "time": "2026-04-02T10:00:00Z"
+    }
+  ]
+}

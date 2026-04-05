@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "buildCommand": "echo 'Static site'",
+  "env": {
+    "CLAUDE_API_KEY": "@claude_api_key",
+    "NEWS_API_KEY": "@news_api_key"
+  },
+  "functions": {
+    "api/**/*.js": {
+      "memory": 1024,
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    }
+  ]
+}
