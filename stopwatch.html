@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stopwatch</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #e8eef7 0%, #f0f5ff 100%);
+      color: #3d4a5c;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      user-select: none;
+    }
+
+    .container { text-align: center; }
+
+    .time {
+      font-size: clamp(3.5rem, 12vw, 6rem);
+      font-weight: 200;
+      letter-spacing: 0.05em;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 3rem;
+      background: linear-gradient(145deg, #f5f9ff, #e9f0ff);
+      padding: 2.5rem 3.5rem;
+      border-radius: 30px;
+      box-shadow:
+        8px 8px 20px rgba(100, 130, 180, 0.15),
+        -8px -8px 20px rgba(255, 255, 255, 0.8);
+      transition: all 0.3s ease;
+    }
+
+    .time:hover {
+      box-shadow:
+        12px 12px 24px rgba(100, 130, 180, 0.2),
+        -8px -8px 20px rgba(255, 255, 255, 0.8);
+    }
+
+    .time .ms {
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      color: #9db1cc;
+    }
+
+    .controls {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    button {
+      background: linear-gradient(145deg, #f5f9ff, #e9f0ff);
+      border: none;
+      color: #3d4a5c;
+      padding: 0.85rem 2.2rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      min-width: 110px;
+      font-family: inherit;
+      font-weight: 500;
+      box-shadow:
+        5px 5px 15px rgba(100, 130, 180, 0.12),
+        -5px -5px 15px rgba(255, 255, 255, 0.7);
+    }
+
+    button:hover {
+      box-shadow:
+        8px 8px 20px rgba(100, 130, 180, 0.18),
+        -5px -5px 15px rgba(255, 255, 255, 0.7);
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      box-shadow:
+        inset 4px 4px 10px rgba(100, 130, 180, 0.15),
+        inset -4px -4px 10px rgba(255, 255, 255, 0.7);
+      transform: translateY(0);
+    }
+
+    button.primary {
+      color: #fff;
+      background: linear-gradient(145deg, #5b7cfa, #4c6ef5);
+      box-shadow:
+        5px 5px 15px rgba(75, 110, 245, 0.3),
+        -5px -5px 15px rgba(255, 255, 255, 0.7);
+    }
+
+    button.primary:hover {
+      box-shadow:
+        8px 8px 20px rgba(75, 110, 245, 0.4),
+        -5px -5px 15px rgba(255, 255, 255, 0.7);
+    }
+
+    button.primary:active {
+      box-shadow:
+        inset 4px 4px 10px rgba(30, 70, 220, 0.3),
+        inset -4px -4px 10px rgba(255, 255, 255, 0.5);
+    }
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: default;
+      pointer-events: none;
+      color: #b0bfd4;
+    }
+
+    .laps {
+      margin-top: 3rem;
+      max-height: 250px;
+      overflow-y: auto;
+      background: linear-gradient(145deg, #f5f9ff, #e9f0ff);
+      padding: 1.5rem;
+      border-radius: 25px;
+      box-shadow:
+        inset 4px 4px 12px rgba(100, 130, 180, 0.1),
+        inset -4px -4px 12px rgba(255, 255, 255, 0.6);
+    }
+
+    .laps::-webkit-scrollbar { width: 4px; }
+    .laps::-webkit-scrollbar-thumb { background: #c5d9f1; border-radius: 2px; }
+
+    .lap {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
+      border-bottom: 1px solid #181818;
+      font-size: 0.8rem;
+      color: #666;
+      min-width: 280px;
+      font-variant-numeric: tabular-nums;
+      animation: fadeIn 0.15s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="time">
+      <span id="display">00:00:00</span><span class="ms" id="ms">.00</span>
+    </div>
+    <div class="controls">
+      <button id="resetBtn" onclick="resetTimer()" disabled>Reset</button>
+      <button id="startBtn" class="primary" onclick="toggleTimer()">Start</button>
+      <button id="lapBtn" onclick="recordLap()" disabled>Lap</button>
+    </div>
+    <div class="laps" id="laps"></div>
+  </div>
+
+  <script>
+    let startTime = 0, elapsed = 0, running = false, raf, lapCount = 0;
+
+    const display = document.getElementById('display');
+    const msDisplay = document.getElementById('ms');
+    const startBtn = document.getElementById('startBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const lapBtn = document.getElementById('lapBtn');
+    const lapsEl = document.getElementById('laps');
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function format(t) {
+      const ms = Math.floor((t % 1000) / 10);
+      const s = Math.floor(t / 1000) % 60;
+      const m = Math.floor(t / 60000) % 60;
+      const h = Math.floor(t / 3600000);
+      return { main: `${pad(h)}:${pad(m)}:${pad(s)}`, ms: `.${pad(ms)}` };
+    }
+
+    function update() {
+      elapsed = Date.now() - startTime;
+      const f = format(elapsed);
+      display.textContent = f.main;
+      msDisplay.textContent = f.ms;
+      raf = requestAnimationFrame(update);
+    }
+
+    function toggleTimer() {
+      if (running) {
+        cancelAnimationFrame(raf);
+        running = false;
+        startBtn.textContent = 'Start';
+        startBtn.classList.add('primary');
+        lapBtn.disabled = true;
+      } else {
+        startTime = Date.now() - elapsed;
+        running = true;
+        update();
+        startBtn.textContent = 'Stop';
+        startBtn.classList.remove('primary');
+        resetBtn.disabled = false;
+        lapBtn.disabled = false;
+      }
+    }
+
+    function resetTimer() {
+      cancelAnimationFrame(raf);
+      running = false;
+      elapsed = 0;
+      lapCount = 0;
+      display.textContent = '00:00:00';
+      msDisplay.textContent = '.00';
+      startBtn.textContent = 'Start';
+      startBtn.classList.add('primary');
+      resetBtn.disabled = true;
+      lapBtn.disabled = true;
+      lapsEl.innerHTML = '';
+    }
+
+    function recordLap() {
+      if (!running) return;
+      lapCount++;
+      const f = format(elapsed);
+      const div = document.createElement('div');
+      div.className = 'lap';
+      div.innerHTML = `<span>Lap ${lapCount}</span><span>${f.main}${f.ms}</span>`;
+      lapsEl.prepend(div);
+    }
+  </script>
+</body>
+</html>
